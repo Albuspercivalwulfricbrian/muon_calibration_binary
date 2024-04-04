@@ -1,0 +1,197 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						5,
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"build" : "ChannelMap",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"jsonFile" : "directory-ChannelMap-f7c4283a61718e25cb9d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "ChannelMap"
+				},
+				{
+					"build" : "ChannelMap/ChannelMap",
+					"jsonFile" : "directory-ChannelMap.ChannelMap-b89fcb3e382b70dacf67.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "ChannelMap/ChannelMap",
+					"targetIndexes" : 
+					[
+						1,
+						4
+					]
+				},
+				{
+					"build" : "ChannelMap/ChannelMapGenerator",
+					"jsonFile" : "directory-ChannelMap.ChannelMapGenerator-01bc63d5b6ad3d9f2c97.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "ChannelMap/ChannelMapGenerator",
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "entanglement",
+					"targetIndexes" : 
+					[
+						0,
+						5,
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"name" : "ChannelMap",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Calibrator::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Calibrator-847a511ca402f6783b9c.json",
+					"name" : "Calibrator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ChannelMap::@357fee963eb4021ce72d",
+					"jsonFile" : "target-ChannelMap-762d2d9eba23f4e90907.json",
+					"name" : "ChannelMap",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ChannelMapGenerator::@d42735526bd7c50fce03",
+					"jsonFile" : "target-ChannelMapGenerator-952e117bcc97595f1fcf.json",
+					"name" : "ChannelMapGenerator",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ChannelMapGenerator_autogen::@d42735526bd7c50fce03",
+					"jsonFile" : "target-ChannelMapGenerator_autogen-4e8ed7fb5fe4acb3f77e.json",
+					"name" : "ChannelMapGenerator_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ChannelMap_autogen::@357fee963eb4021ce72d",
+					"jsonFile" : "target-ChannelMap_autogen-ee170d07f9022e4fd873.json",
+					"name" : "ChannelMap_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CreateTrackTree::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CreateTrackTree-4c45f185477a45cfabb7.json",
+					"name" : "CreateTrackTree",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CustomClassDictionary::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CustomClassDictionary-77194fe170bf8a957e7c.json",
+					"name" : "CustomClassDictionary",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "FileReader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FileReader-7319e35f3d79579f3f53.json",
+					"name" : "FileReader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "G__CustomClassDictionary::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-G__CustomClassDictionary-ddda58132977ee3d5469.json",
+					"name" : "G__CustomClassDictionary",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build",
+		"source" : "/mnt/DATA/muon_calibration/muon_calibration_binary"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

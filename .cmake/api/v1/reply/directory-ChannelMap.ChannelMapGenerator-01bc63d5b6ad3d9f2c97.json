@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "ChannelMap/ChannelMapGenerator",
+		"source" : "ChannelMap/ChannelMapGenerator"
+	}
+}

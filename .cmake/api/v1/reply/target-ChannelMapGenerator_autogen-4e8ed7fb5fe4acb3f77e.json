@@ -1,0 +1,58 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"ChannelMap/ChannelMapGenerator/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"id" : "ChannelMapGenerator_autogen::@d42735526bd7c50fce03",
+	"isGeneratorProvided" : true,
+	"name" : "ChannelMapGenerator_autogen",
+	"paths" : 
+	{
+		"build" : "ChannelMap/ChannelMapGenerator",
+		"source" : "ChannelMap/ChannelMapGenerator"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/ChannelMap/ChannelMapGenerator/CMakeFiles/ChannelMapGenerator_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/ChannelMap/ChannelMapGenerator/CMakeFiles/ChannelMapGenerator_autogen.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

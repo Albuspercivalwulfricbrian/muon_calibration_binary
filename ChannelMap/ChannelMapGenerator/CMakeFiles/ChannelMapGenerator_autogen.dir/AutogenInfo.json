@@ -1,0 +1,74 @@
+{
+	"BUILD_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/ChannelMapGenerator_autogen",
+	"CMAKE_BINARY_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary/ChannelMap/ChannelMapGenerator",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/mnt/DATA/muon_calibration/muon_calibration_binary/ChannelMap/ChannelMapGenerator/CMakeLists.txt"
+	],
+	"CMAKE_SOURCE_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/ChannelMapGenerator_autogen/include",
+	"MOC_COMPILATION_FILE" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/ChannelMapGenerator_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator",
+		"/mnt/DATA/muon_calibration/muon_calibration_binary/ChannelMap/ChannelMapGenerator",
+		"/mnt/DATA/muon_calibration/muon_calibration_binary/ChannelMap/ChannelMapGenerator/include",
+		"/usr/include/c++/11",
+		"/usr/include/x86_64-linux-gnu/c++/11",
+		"/usr/include/c++/11/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/11/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/ChannelMapGenerator_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/CMakeFiles/ChannelMapGenerator_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/mnt/DATA/muon_calibration/muon_calibration_binary/build/ChannelMap/ChannelMapGenerator/CMakeFiles/ChannelMapGenerator_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/mnt/DATA/muon_calibration/muon_calibration_binary/ChannelMap/ChannelMapGenerator/main.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
