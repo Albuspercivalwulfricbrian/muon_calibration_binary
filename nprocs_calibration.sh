@@ -1,6 +1,6 @@
  #!/usr/bin/bash
 
-export PROJECT_PATH=/home/doc/entanglement/entanglement_analysis_project
+export PROJECT_PATH=/mnt/DATA/muon_calibration/muon_calibration_binary
 # export PROJECT_PATH=.
 # export SOURCE_PATH=$(yad --file-selection --directory)/
 export SOURCE_PATH=/media/doc/DATA/entanglement/pure_data/
@@ -14,7 +14,7 @@ mkdir -p  $SOURCE_PATH/$temp_DIR
 counter=0
 NUM_PROCS=4
 
-for filename in ${SOURCE_PATH}07a8de9a*.root;
+for filename in ${SOURCE_PATH}mpd_*.root;
 do
     fname=$(basename $filename .root)
     echo $fname
@@ -29,15 +29,13 @@ do
     # cd $SOURCE_PATH/$temp_DIR/$fname/macro
     touch $SOURCE_PATH/$temp_DIR/$fname/${fname}_log.out
     cd $BUILD_DIR
-    nohup ./WaveformAnalysis ${SOURCE_PATH} $fname $temp_DIR &    
-    nprocs=$(ps -A | grep WaveformAnal |wc -l)
+    nohup ./FileReader ${SOURCE_PATH} $fname $temp_DIR &    
+    nprocs=$(ps -A | grep FileReader |wc -l)
     echo $nprocs        
-        while [[ $(ps -A | grep WaveformAnal |wc -l) -ge $NUM_PROCS ]]
+        while [[ $(ps -A | grep FileReader |wc -l) -ge $NUM_PROCS ]]
         do
             sleep 5
         done
-
-
     fi
 done
 wait

@@ -107,7 +107,7 @@ int main(int argc, char** argv)
         if (reduced_size!=0)
         {
             bool isVertical = trackinfo->isVertical();
-            if (reduced_size >=5)
+            if (reduced_size >=3)
             {
                 // cout << "Yeah, boy!" << endl;
                 MuonTracker MTracker(trackinfo);
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
                 MTracker.SetTrackCalcMode(TrackCalculationMode);
                 MTracker.CalculateTrack();
                 // if (isVertical)
-                if (MTracker.GetTrackZenithAngle() > 0.4 && MTracker.GetTrackZenithAngle() < 1.57)
+                if (MTracker.GetTrackZenithAngle() > 0.8 && MTracker.GetTrackZenithAngle() < 1.57)
                 {
                     for (int i = 0; i< reduced_size; i++)
                     {
@@ -128,7 +128,7 @@ int main(int argc, char** argv)
                     MTracker.CalculateChargeStraightened();
                     auto kkk = MTracker.GetChargeStraightened();
                     MTracker.GetCalibratedCharge(trackinfo);
-                if (MTracker.GetTrackZenithAngle() > 0.4 && MTracker.GetTrackZenithAngle() < 1.57)
+                if (MTracker.GetTrackZenithAngle() > 0.8 && MTracker.GetTrackZenithAngle() < 1.58)
 
                 // if (isVertical)
                 {                
@@ -174,7 +174,7 @@ int main(int argc, char** argv)
                 // histall13d[x][y][z]->Draw();
                 Ymax =  (Float_t)histall13d[x][y][z]->GetMaximum();
                 Xmax =  (Float_t)histall13d[x][y][z]->GetBinCenter(histall13d[x][y][z]->GetMaximumBin());
-                FitMin = Xmax - 2000 ;
+                FitMin = Xmax - 2500 ;
                 FitMax = Xmax+4000;
                 R2= 1.35*Xmax; 
                 R1= 0.65*Xmax;
