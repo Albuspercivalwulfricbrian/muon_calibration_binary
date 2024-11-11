@@ -46,27 +46,12 @@ class TrackInfo
     }
     void SearchTrueTrack(int threshold)
     {
-        // hits.erase(
-        //     std::remove_if(
-        //         hits.begin(), 
-        //         hits.end(),
-        //         [&](const HitInfo& p) { 
-        //             return (
-        //                 // false
-        //                 !(p.time > 1550 && p.time < 1580)
-        //             || (p.zl_rms > 30) || (p.II.signal_length > 40) 
-        //             || (p.II.end_amplitude < -15) || (p.charge < threshold)
-        //             ); 
-        //         }
-        //     ), hits.end()); 
-
         for (auto p : hits)
         {
             if (    
-                (p.time > 2630 && p.time < 2700) && 
-                (p.zl_rms < 40) && 
-                // (p.II.signal_length < 60) && 
-                // (p.II.end_amplitude > -15)  && 
+                (p.time > 2630 && p.time < 2700) && //!Event selection cut on time
+                (p.zl_rms < 40) && //!Event selection cut on base line quality
+
                 (p.charge > threshold)
                 ) 
                 hits_reduced.push_back(p);
@@ -79,7 +64,7 @@ class TrackInfo
                 for (int j = i+1; j < hits_reduced.size(); j++)
                 {
                     if ((abs(hits_reduced[j].X-hits_reduced[i].X)<=1) && (abs(hits_reduced[j].Y-hits_reduced[i].Y)<=1) && (abs(hits_reduced[j].Z-hits_reduced[i].Z)<=1)
-                    //  && (2*abs(hits_reduced[j].charge-hits_reduced[i].charge)/abs(hits_reduced[j].charge+hits_reduced[i].charge)<0.3)
+                     && (2*abs(hits_reduced[j].charge-hits_reduced[i].charge)/abs(hits_reduced[j].charge+hits_reduced[i].charge)<0.4)
                      )
                     {
                         flag = 1;
@@ -97,24 +82,10 @@ class TrackInfo
                 ), hits_reduced.end()); 
             Float_t avgTime = 0;
             for (int i = 0; i < hits_reduced.size(); i++) avgTime+=(Float_t)hits_reduced[i].time/(Float_t)hits_reduced.size();
-
-            // Float_t charge_slice[6];
-            // for (int i = 0; i < 6; i++) charge_slice[i] = 0;
-            // for (auto p : hits_reduced)
-            // {
-            //     charge_slice[p.Y-1] += p.charge;
-            // }
-            // bool track_selector = 1;
-            // for (int i = 1; i < 6; i++)
-            // {
-            //     if (charge_slice[i-1]!= 0 && charge_slice[i]!=0 && 
-            //     (2*abs(charge_slice[i-1]-charge_slice[i])/abs(charge_slice[i-1]+charge_slice[i])>0.3)) track_selector = 0;
-            // }
-            // if (track_selector==0) hits_reduced.clear(); 
         }  
     }
 
-    bool isVertical()
+    bool isVertical() //! simple function to check is muon track is vertical without track reconstruction procedure
     {
         int maxX = -100;
         int minX = 100;
@@ -143,8 +114,6 @@ class TrackInfo
         avX/=totalCharge;
         avY/=totalCharge;
         avZ/=totalCharge;
-
-        // cout << avX << " " << avY << " " << avZ << endl;
         avAngle = 0;
         for (int i = 0; i < hits_reduced.size(); i++)
         {
@@ -153,23 +122,8 @@ class TrackInfo
             ,0.5)*(hits_reduced[i].charge);
         }
         avAngle/=totalCharge;
-        // cout << avAngle << endl;
-
-        ////////check vertically whole
         int flag = 0;
-        // for (int pos = minY; pos <= maxY; pos++)
-        // {
-        //     int flag = 0;
-        //     for (int i = 0; i < hits_reduced.size(); i++)
-        //     { 
-        //         if (hits_reduced[i].Y == pos) {flag = 1; break;}
-        //     }       
-        //     if (flag==0) return 0;
-        // }
-        ///////////////////////////
 
-        // if ((maxX-minX <= 1) && (maxZ-minZ <=2) && (maxY-minY >=4 )) return 1;
-        // else return 0;
         if (avAngle <=0.95 && avAngle >= 0.7  ) return 1;
         else return 0;
     }

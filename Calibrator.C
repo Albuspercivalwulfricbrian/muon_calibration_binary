@@ -42,7 +42,6 @@ int main(int argc, char** argv)
     Float_t  Ymax,  Xmax,   R1, R2, FitMin, FitMax, Xadd;
 
     CreateMap();
-    cout << Map[93][2] << endl;
 
 	TString source_path = (TString)argv[1];
     TString run_name = (TString)argv[2];
@@ -101,23 +100,20 @@ int main(int argc, char** argv)
         trackreduced.Reset();
         source_tree->GetEntry(EvNum);
         int track_size = trackinfo->GetCurrentTrackSize();
-        trackinfo->SearchTrueTrack(3000);
+        trackinfo->SearchTrueTrack(1500);
         int reduced_size = trackinfo->GetReduced().size();
-        // cout << reduced_size << endl;
         if (reduced_size!=0)
         {
             bool isVertical = trackinfo->isVertical();
-            if (reduced_size >=3)
+            if (reduced_size >=4)
             {
-                // cout << "Yeah, boy!" << endl;
                 MuonTracker MTracker(trackinfo);
                 // MTracker.SetDebugMode(1);
                 MTracker.SetZenithVector(0,1,0);
                 MTracker.SetAzimuthVector(1,0,0);
                 MTracker.SetTrackCalcMode(TrackCalculationMode);
                 MTracker.CalculateTrack();
-                // if (isVertical)
-                if (MTracker.GetTrackZenithAngle() > 0.8 && MTracker.GetTrackZenithAngle() < 1.57)
+                if (MTracker.GetTrackZenithAngle() > 0.1 && MTracker.GetTrackZenithAngle() < 1.57)
                 {
                     for (int i = 0; i< reduced_size; i++)
                     {
@@ -128,9 +124,8 @@ int main(int argc, char** argv)
                     MTracker.CalculateChargeStraightened();
                     auto kkk = MTracker.GetChargeStraightened();
                     MTracker.GetCalibratedCharge(trackinfo);
-                if (MTracker.GetTrackZenithAngle() > 0.8 && MTracker.GetTrackZenithAngle() < 1.58)
-
-                // if (isVertical)
+                if (MTracker.GetTrackZenithAngle() > 0.1 && MTracker.GetTrackZenithAngle() < 1.57
+                 )
                 {                
                     for (int i = 0; i< reduced_size; i++)
                     {
@@ -146,17 +141,6 @@ int main(int argc, char** argv)
 
         }
         else {};
-    
-        // if (EvNum%10000 == 0) 
-        // {
-        //     std::cout<< u8"\033[2J\033[1;1H"; 
-        //     std::cout << (Float_t)EvNum/(Float_t)total_entries*100 << "%" << std::endl;
-        //     time_t time_left = (time(NULL)-start_time)*(float)(total_entries-EvNum)/(float)(EvNum);
-        //     std::cout << " time left: ";
-        //     if (time_left/3600 > 0) cout << time_left/3600 <<"h ";
-        //     if ((time_left%3600)/60 > 0 || time_left/3600 == 0) cout << (time_left%3600)/60 << "m ";
-        //     cout << (time_left%3600)%60<< "s " << std::endl;
-        // }
     }
 
     for (int x = 0; x < 3; x++)
@@ -168,22 +152,15 @@ int main(int argc, char** argv)
             for (int z = 0; z < 7; z++)
             {
                 zpos[z] = z+1;
-                // cout << "x = " << x+1 << "; y = " << y+1 << "; z = " << z+1 << endl;
                 canvas[3*x+y/2]->cd(z+1+8*(y%2));
-
-                // histall13d[x][y][z]->Draw();
                 Ymax =  (Float_t)histall13d[x][y][z]->GetMaximum();
                 Xmax =  (Float_t)histall13d[x][y][z]->GetBinCenter(histall13d[x][y][z]->GetMaximumBin());
-                FitMin = Xmax - 2500 ;
-                FitMax = Xmax+4000;
+                FitMin = Xmax-1500;
+                FitMax = 2.*Xmax;
                 R2= 1.35*Xmax; 
                 R1= 0.65*Xmax;
                 mypow1->SetParameters(Ymax,Xmax,10.);
                 mypow1->SetParLimits(1,R1,R2);
-                // cout << "shit" <<endl;
-                // histall13d[x][y][z]->Draw();
-                // histall13d[x][y][z]->Fit(mypow1,"Q","",FitMin,FitMax);
-
                 histall3d[x][y][z]->Draw();
                 histall13d[x][y][z]->Draw("same");
                 histall13d[x][y][z]->Fit(mypow1,"Q","",FitMin,FitMax);

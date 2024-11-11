@@ -54,7 +54,7 @@ uint32_t DataFileReader::ConsequentialEventsReading()
       fread(&uiBuffer, sizeof(uiBuffer),1,fd);
       uint32_t offset = 0;   // in elements of event buffer
       int32_t  end    = BS;  // remain number of elements (32-bit words)
-      if (uiTotalEvents%10000==0) DisplayTimeToCalculate(ftell(fd)/2052,sSizeOfFile/2052,start_time);
+      if (uiTotalEvents%10000==0) DisplayTimeToCalculate(ftell(fd)/1,sSizeOfFile/1,start_time);
       while (end > 0)
       {
         TotalHeader.DeviceHeader.sn     = uiBuffer[offset];
@@ -88,7 +88,12 @@ uint32_t DataFileReader::ConsequentialEventsReading()
               offset++;
               TotalHeader.TimeHeader.chup     = uiBuffer[offset];
               offset++;
+              cout << "ADC ID: " << TotalHeader.DeviceHeader.sn << endl;
+              cout << "Event Type: " << TotalHeader.ChHeader.type << endl;
 
+              cout << "TotalHeader.TimeHeader.taisec: " << TotalHeader.TimeHeader.taisec << endl
+              << "TotalHeader.TimeHeader.tainsec: " << TotalHeader.TimeHeader.tainsec << endl 
+              << "Time = " <<TotalHeader.TimeHeader.taisec+(float)(TotalHeader.TimeHeader.tainsec/1000000000.0) << endl << endl;
                 // if (uiTotalEvents%1000==0)  cout << " Time: " << TotalHeader.TimeHeader.taisec << endl;
               break;
             case 1:
@@ -98,48 +103,52 @@ uint32_t DataFileReader::ConsequentialEventsReading()
               const uint16_t SN = (TotalHeader.ChHeader.length-2)*2;  // Number of samples
               TotalHeader.SubHeader.wf_tslo = uiBuffer[offset];
               offset++;
-              TotalHeader.SubHeader.wf_tsup = uiBuffer[offset];
+
+              TotalHeader.SubHeader.wf_tsup = (uiBuffer[offset] & 0xFFFFFFFC) >> 2;
               offset++;
               int16_t wave = 0;
               int32_t polarity = 1;
               int32_t iSignalOffset = 0;
-            //   cout << "ADC ID: " << TotalHeader.DeviceHeader.id << endl
-            //   << "Channel: " << TotalHeader.ChHeader.ch << endl
-            //   << "Byte Length: " <<  TotalHeader.ChHeader.length << endl
-            //   << "Event Type: " << TotalHeader.ChHeader.type << endl << endl;
-            // std::cout<< "ADC name: "; std::cout<<TotalHeader.DeviceHeader.sn << endl;
-
+              // cout << "ADC ID: " << TotalHeader.DeviceHeader.sn << endl
+              // << "Channel: " << TotalHeader.ChHeader.ch << endl
+              // << "Byte Length: " <<  TotalHeader.ChHeader.length << endl
+              // << "Event Type: " << TotalHeader.ChHeader.type << endl
+              // << "TimeLow: " << TotalHeader.SubHeader.wf_tslo << endl
+              // << "TimeUp: " << TotalHeader.SubHeader.wf_tsup << endl<< endl;
               event_waveform.channel=ch;
 
               for (int s=0; s<(SN/2); s++)
               {
                 // cout << "here" << endl;
                 auto ind = offset+s;     // dirrect cycle
-                wave = -(((uiBuffer[ind] & 0xFFFF0000) >> 16) * polarity + iSignalOffset);
+                wave = (((uiBuffer[ind] & 0xFFFF0000) >> 16) * polarity + iSignalOffset);
                 event_waveform.wf.push_back(wave);
-                // if (event_waveform.wf.size()%2==0) 
-                // cout << Form("wf[%i] = ",2*s) << wave << " "; << Form("wf[%i] = ",2*s+1) 
-                wave = -((uiBuffer[ind] & 0xFFFF) * polarity + iSignalOffset);
+                wave = ((uiBuffer[ind] & 0xFFFF) * polarity + iSignalOffset);
                 event_waveform.wf.push_back(wave);
-              //if (event_waveform.wf.size()%10==0) cout << wave << " ";
               }
               event_waveform.wf_size = event_waveform.wf.size();
               ////////////////
               // event_waveform.InvertSignal();
 
-              event_waveform.Set_Zero_Level_Area(50);
-              // short_channel_info[ch]->zl = event_waveform.CalculateZlwithNoisePeaks(200);
-              short_channel_info[ch]->zl = event_waveform.Get_Zero_Level();
+              event_waveform.Set_Zero_Level_Area(60);
+              // event_waveform.SplineWf();
+              // event_waveform.SplineWf();
+              short_channel_info[ch]->zl = event_waveform.CalculateZlwithNoisePeaks(130);
+              // short_channel_info[ch]->zl = event_waveform.Get_Zero_Level();
               short_channel_info[ch]->zl_rms = event_waveform.Get_Zero_Level_RMS();
 
-              event_waveform.SetBoarders(150,220);
+              event_waveform.SetBoarders(50,100);//Sanya smotry syuda. Zdes yobannye granitsy tvoyego signala dlya poiska polozhemiya pika
               int pp = event_waveform.Get_time();
-              event_waveform.AssumeSmartScope(false);
+              // event_waveform.SetBoarders(pp-12,pp+25);
+              // event_waveform.SetBoarders(50,200);
               short_channel_info[ch]->amp = event_waveform.Get_Amplitude();
+              event_waveform.AssumeSmartScope();// Sanya!!!! Zdes granitsy dlya umnogo integrirovaniye. Dlya bolshih signalov otklyuchai blyat
               
               short_channel_info[ch]->time = event_waveform.Get_time_gauss();
               short_channel_info[ch]->charge = event_waveform.Get_Charge();
               short_channel_info[ch]->ADC_ID = event_waveform.ADCID;
+              short_channel_info[ch]->II = event_waveform.GetIntegralInfo();
+              
 
               offset += (SN/2);
               break;

@@ -25,7 +25,6 @@ int main(int argc, char** argv)
 	TString source_path = (TString)argv[1];
     TString run_name = (TString)argv[2];
     const Int_t total_channels = 128;
-    cout << " pmpom " << endl;
     CreateMap();
     TFile *source_file = TFile::Open(source_path+run_name);
     TTree *source_tree = (TTree*)source_file->Get("adc64_data");

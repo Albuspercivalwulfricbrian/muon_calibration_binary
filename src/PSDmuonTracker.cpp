@@ -8,21 +8,7 @@ MuonTracker::MuonTracker(TrackInfo* Extrackinfo)
 
 MuonTracker::~MuonTracker()
 {
-	// std::cout << fHitPosition[0][2] << std::endl;
-	// for (int i = 0; i < fN_Hits; i++)
-	// {
-	// 	std::cout << fCharge_Hits[i] << "  -  " << fChargeStraightened[i] << std::endl;
-	// }
 }
-// void MuonTracker::Initialize(Int_t nhits, Float_t **hit_position, Float_t **cell_sizes, Float_t *charge_hits, Float_t *charge_calibration)
-// {
-// 	fN_Hits = nhits;
-// 	fHitPosition = hit_position;
-// 	fCellSizes = cell_sizes;
-// 	AllocData();
-// 	memcpy(fCharge_Hits, charge_hits, (fN_Hits)*sizeof(float));
-// 	memcpy(fCharge_Calibration, charge_calibration, (fN_Hits)*sizeof(float));
-// }
 
 void MuonTracker::InitializeWithVector(TrackInfo* trackinfo)
 {

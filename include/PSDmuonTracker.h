@@ -17,12 +17,8 @@ class MuonTracker
 {
 
     public:
-        
-        /**   Default constructor   **/
-	// MuonTracker(TrackInfo&) {};
+
 	MuonTracker(TrackInfo*);
-	
-        /**   Default destructor   **/
         ~MuonTracker();
 
 

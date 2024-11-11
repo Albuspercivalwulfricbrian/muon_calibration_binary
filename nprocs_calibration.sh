@@ -1,9 +1,9 @@
  #!/usr/bin/bash
 
-export PROJECT_PATH=/mnt/DATA/muon_calibration/muon_calibration_binary
+export PROJECT_PATH=/home/admin/muon_calibration_binary-main
 # export PROJECT_PATH=.
 # export SOURCE_PATH=$(yad --file-selection --directory)/
-export SOURCE_PATH=/media/doc/DATA/entanglement/pure_data/
+export SOURCE_PATH=/home/admin/HOLODILNIK/HAMAMATSU/LED/T4/
 
 echo $SOURCE_PATH
 export temp_DIR=calibrated_files/
@@ -12,11 +12,11 @@ export BUILD_DIR=$PROJECT_PATH/build
 echo $SOURCE_PATH
 mkdir -p  $SOURCE_PATH/$temp_DIR
 counter=0
-NUM_PROCS=4
+NUM_PROCS=6
 
-for filename in ${SOURCE_PATH}mpd_*.root;
+for filename in ${SOURCE_PATH}*.data;
 do
-    fname=$(basename $filename .root)
+    fname=$(basename $filename .data)
     echo $fname
     DIR="$SOURCE_PATH$temp_DIR$fname"
     if [ -d "$DIR" ]
@@ -29,7 +29,7 @@ do
     # cd $SOURCE_PATH/$temp_DIR/$fname/macro
     touch $SOURCE_PATH/$temp_DIR/$fname/${fname}_log.out
     cd $BUILD_DIR
-    nohup ./FileReader ${SOURCE_PATH} $fname $temp_DIR &    
+    nohup ./FileReader ${SOURCE_PATH} $temp_DIR $fname &    
     nprocs=$(ps -A | grep FileReader |wc -l)
     echo $nprocs        
         while [[ $(ps -A | grep FileReader |wc -l) -ge $NUM_PROCS ]]

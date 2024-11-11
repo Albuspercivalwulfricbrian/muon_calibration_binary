@@ -2,8 +2,6 @@
 #define CHANNEL_ENTRY_H
 #include<TTree.h>
 #include <vector>
-
-#include"constants.h"
 using namespace std;
 const int MAX_N_SAMPLES = 2048;
 
@@ -24,7 +22,6 @@ struct short_energy_ChannelEntry
     float zl_rms;
     IntegralInfo II;
     uint32_t ADC_ID;
-    // int16_t nCoincidencePeaks;
     void Initialize();
 };
 
@@ -43,12 +40,10 @@ class ChannelEntry {
     int32_t ADCID = 0;
     int16_t channel = 0;
     int16_t wf_size;
-    // int16_t wf[MAX_N_SAMPLES];
     vector<int16_t> wf;
 
 
     private:
-    // int16_t dwf[MAX_N_SAMPLES] = {0};
     vector<int16_t> dwf;
 
     int32_t fZlLeft = 0;
@@ -65,7 +60,7 @@ class ChannelEntry {
     void Initialize();
     void SplineWf();
     void CalculateDiffWf();
-    void AssumeSmartScope(bool);
+    void AssumeSmartScope();
     void SetBoarders(int32_t,int32_t);
     void FindDiffWfPars(int16_t &min_diff, int16_t &min_time, int16_t &max_diff, int16_t &max_time);
     void Set_Zero_Level(int);

@@ -1,3 +1,9 @@
+/* 
+    @file   Map.h
+    @brief  File to set module geometry. Using ChannelMap json geometry file generation will be possible
+*/
+
+
 #include <iostream>
 #include <vector>
 
@@ -30,17 +36,29 @@ namespace MAP_H
                             {90, 83, 91, 84, 92, 85, 93},         // 6
                             {86, 94, 87, 95, 88, 96, 113},         
                             {121, 114, 122, 115, 123, 116, 124},        
-                            {117, 125, 118, 126, 119, 127, 120},};
+                            {117, 125, 118, 126, 119, 127, 120}
+                            };
 
                             
 
     vector<vector<int>> mapxyz  {
-                                    {1, 1},
+                                    // {1, 1},
+                                    // {2, 1},
+                                    // {3, 1},
+                                    // {1, 2},
+                                    // {2, 2},
+                                    // {3, 2},
+                                    // {1, 3},
+                                    // {2, 3},
+                                    // {3, 3},
+                                    {3, 2},
+
                                     {2, 1},
                                     {3, 1},
                                     {1, 2},
                                     {2, 2},
-                                    {3, 2},
+                                    {1, 1},
+
                                     {1, 3},
                                     {2, 3},
                                     {3, 3},

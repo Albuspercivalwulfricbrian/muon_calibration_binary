@@ -19,7 +19,6 @@ using namespace std;
         zl_rms = 0.;
         zl = 0.;
         ADC_ID = 0;
-        // nCoincidencePeaks = 0;
         II.Initialize();
     }
 
@@ -34,7 +33,6 @@ using namespace std;
 
     void ChannelEntry::Initialize()
     {
-        // for (int i = 0; i < sizeof(wf)/sizeof(wf[0]); i++) {wf[i] = 0; dwf[i] = 0;}
         ADCID = -1000;
         channel = -1000;
         wf.clear();
@@ -44,9 +42,8 @@ using namespace std;
 
     void ChannelEntry::GetWfSize() {wf_size = wf.size();}
 
-    void ChannelEntry::SplineWf()
+    void ChannelEntry::SplineWf() //! Smoothing waveform
     {
-        // float wf1[MAX_N_SAMPLES] = {0};
         vector<float> wf1;
         const int32_t SplineWidth = 2;
         for (int16_t i = 0; i < wf_size; i++)
@@ -69,12 +66,11 @@ using namespace std;
         return v;
 
     }
-    int16_t ChannelEntry::CountCoincidencePeaks(int32_t threshold1, int32_t threshold2)
+    int16_t ChannelEntry::CountCoincidencePeaks(int32_t threshold1, int32_t threshold2) 
     {
         int16_t nCoincidencePeaks=0;
         int32_t epsilon1 = 10;
         int32_t epsilon2 = 100;
-        // int16_t wf1[MAX_N_SAMPLES] = {0};
         for (int32_t i = fGATE_BEG; i < fGATE_END; i++)
         {
             int32_t v = PointAmpl(i);
@@ -86,27 +82,23 @@ using namespace std;
             if ( (v-vr > epsilon1) && (v-vl > epsilon1) && (v-vrr > epsilon2) && (v-vll > epsilon2) && ( v > threshold1 && v < threshold2)) nCoincidencePeaks++;
 
         }
-        // for (int32_t i = 0; i < wf_size; i++) wf[i] = dwf[i];
         return nCoincidencePeaks;
     } 
 
-    void ChannelEntry::CalculateDiffWf()
+    void ChannelEntry::CalculateDiffWf() //! differentiate waveform
     {
         const float Diff_window = 4;
-        // int16_t wf1[MAX_N_SAMPLES] = {0};
         dwf.clear();
         for (int16_t i = 0; i < wf_size; i++)
         {
             int32_t il=i-Diff_window; int32_t ir=i+Diff_window;
             if (il<0) il=0;
             if (ir>wf_size-1) ir=wf_size-1;
-            // dwf[i]=(int16_t)((float)(wf[ir]-wf[il])/(float)(ir-il));
             dwf.push_back((int16_t)((float)(wf[ir]-wf[il])/(float)(ir-il)));
         }
-        // for (int32_t i = 0; i < wf_size; i++) wf[i] = dwf[i];
     } 
 
-    float ChannelEntry::CalculateZlwithNoisePeaks(int a)
+    float ChannelEntry::CalculateZlwithNoisePeaks(int a) //! Calculating base line level without large noise burst taken into account
     {
         CalculateDiffWf();
         float sum = 0;
@@ -119,7 +111,7 @@ using namespace std;
     return zl;
     }
 
-    void ChannelEntry::AssumeSmartScope(bool isPlastic = false)
+    void ChannelEntry::AssumeSmartScope() //! Finding waveform on snapshot
     {
         fGATE_BEG = peak_position;
         fGATE_END = peak_position;
@@ -128,19 +120,17 @@ using namespace std;
         {
             fGATE_BEG--;
             if (fGATE_BEG < 0) {fGATE_BEG++; break;} 
-            if (wf[fGATE_BEG] > zl) break;
+            if (wf[fGATE_BEG] > zl-0.1*amp) break;
         }
         while (1)
         {
             fGATE_END++;
             if (fGATE_END >= wf_size) {fGATE_END--; break;} 
-            // if (wf[fGATE_END] > zl) break;
-            if (wf[fGATE_END] > zl) break;
-            if (isPlastic==true && fGATE_END-peak_position > 8) break; 
+            if (wf[fGATE_END] > zl-0.1*amp) break;
         }
     }
 
-    void ChannelEntry::SetBoarders(int32_t BEG, int32_t END)
+    void ChannelEntry::SetBoarders(int32_t BEG, int32_t END)//! Setting boarders for event waveform analysis
     {
         fGATE_BEG = BEG;
         fGATE_END = END;
@@ -162,7 +152,7 @@ using namespace std;
         }
     }
 
-    void ChannelEntry::Set_Zero_Level_Area(int32_t i)
+    void ChannelEntry::Set_Zero_Level_Area(int32_t i) //!Setting Area for base line level calculation
     {
         fZlLeft = 0;
         fZlRight = i;
@@ -229,12 +219,11 @@ using namespace std;
     {
         float gateInteg = 0;
         {
-            //for (int s=180; s <= 680; ++s) {
-
              for (int s=fGATE_BEG; s <= fGATE_END; ++s) {
-                //if (zl < (float)wf[s] && s > peak_position+7) {II.signal_length = s - fGATE_BEG; II.end_amplitude = (float)zl - (float)wf[s];break;}
                 gateInteg +=  ((float)zl - (float)wf[s]) ;
-            }                
+            }
+            II.signal_length = fGATE_END - fGATE_BEG; II.end_amplitude = (float)zl - (float)wf[fGATE_END];
+                            
         }
 
         return gateInteg;
@@ -246,7 +235,7 @@ using namespace std;
     }
 
 
-    int16_t ChannelEntry::Get_time()
+    int16_t ChannelEntry::Get_time() //!this time is the number of peak point of waveform
     {
         amp = 0;
         peak_position = 0;
@@ -263,10 +252,9 @@ using namespace std;
                 peak_position = s;
             }
         }
-        // if ( amp > 0) cout << amp << endl;
         return peak_position;
     }
-    float ChannelEntry::Get_time_gauss()
+    float ChannelEntry::Get_time_gauss() //! average time of event waveform
     {
         if (wf_size == 0) return 0;
         float peak_search = 0.;
@@ -290,11 +278,10 @@ using namespace std;
 
     void ChannelEntry::FillWf(int16_t *Ewf)
     {
-        for (int i = 0; i < SNAPSHOT_LENGTH; i++)
+        for (int i = 0; i < 1024; i++)
         {
             wf[i] = Ewf[i];
             wf_size++;
-            // cout << wf[i] << endl;
         }
     }
     
