@@ -54,7 +54,7 @@ uint32_t DataFileReader::ConsequentialEventsReading()
       fread(&uiBuffer, sizeof(uiBuffer),1,fd);
       uint32_t offset = 0;   // in elements of event buffer
       int32_t  end    = BS;  // remain number of elements (32-bit words)
-      if (uiTotalEvents%10000==0) DisplayTimeToCalculate(ftell(fd)/1,sSizeOfFile/1,start_time);
+      if (uiTotalEvents%10000==0) DisplayTimeToCalculate(ftell(fd)/1024,sSizeOfFile/1024,start_time);
       while (end > 0)
       {
         TotalHeader.DeviceHeader.sn     = uiBuffer[offset];
@@ -88,12 +88,12 @@ uint32_t DataFileReader::ConsequentialEventsReading()
               offset++;
               TotalHeader.TimeHeader.chup     = uiBuffer[offset];
               offset++;
-              cout << "ADC ID: " << TotalHeader.DeviceHeader.sn << endl;
-              cout << "Event Type: " << TotalHeader.ChHeader.type << endl;
+              // cout << "ADC ID: " << TotalHeader.DeviceHeader.sn << endl;
+              // cout << "Event Type: " << TotalHeader.ChHeader.type << endl;
 
-              cout << "TotalHeader.TimeHeader.taisec: " << TotalHeader.TimeHeader.taisec << endl
-              << "TotalHeader.TimeHeader.tainsec: " << TotalHeader.TimeHeader.tainsec << endl 
-              << "Time = " <<TotalHeader.TimeHeader.taisec+(float)(TotalHeader.TimeHeader.tainsec/1000000000.0) << endl << endl;
+              // cout << "TotalHeader.TimeHeader.taisec: " << TotalHeader.TimeHeader.taisec << endl
+              // << "TotalHeader.TimeHeader.tainsec: " << TotalHeader.TimeHeader.tainsec << endl 
+              // << "Time = " <<TotalHeader.TimeHeader.taisec+(float)(TotalHeader.TimeHeader.tainsec/1000000000.0) << endl << endl;
                 // if (uiTotalEvents%1000==0)  cout << " Time: " << TotalHeader.TimeHeader.taisec << endl;
               break;
             case 1:
@@ -109,6 +109,7 @@ uint32_t DataFileReader::ConsequentialEventsReading()
               int16_t wave = 0;
               int32_t polarity = 1;
               int32_t iSignalOffset = 0;
+              short_channel_info[ch]->ADCTimeStamp = (float)TotalHeader.SubHeader.wf_tslo+(float)(TotalHeader.SubHeader.wf_tsup/1000000000.0);
               // cout << "ADC ID: " << TotalHeader.DeviceHeader.sn << endl
               // << "Channel: " << TotalHeader.ChHeader.ch << endl
               // << "Byte Length: " <<  TotalHeader.ChHeader.length << endl

@@ -17,6 +17,7 @@ struct short_energy_ChannelEntry
 {
     float charge;
     float time;
+    float ADCTimeStamp;
     uint16_t amp;
     float zl;
     float zl_rms;

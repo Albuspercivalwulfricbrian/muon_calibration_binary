@@ -19,6 +19,7 @@ using namespace std;
         zl_rms = 0.;
         zl = 0.;
         ADC_ID = 0;
+        ADCTimeStamp = 0.;
         II.Initialize();
     }
 
